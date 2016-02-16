@@ -535,7 +535,6 @@ function writeAttribute(name, value) {
 
 function getTags(tag, values) {
   return values.map(function (item) {
-    console.log(item);
     return '    <' + tag + writeAttribute('id', item.id) + writeAttribute('xml:lang', item.lang) + writeAttribute('dir', item.dir) + '>' + item.value + '</' + tag + '>';
   }).join('\n');
 }
@@ -3227,7 +3226,6 @@ var book = {
         book.zipItems.push({ href: 'META-INF', contents: 'empty', options: { compression: 'STORE', dir: true } });
         book.zipItems.push(zipItem('META-INF/container.xml', renderContainerXml()));
         book.zipItems = book.zipItems.concat(book.manifest);
-        console.table(book.zipItems);
         return makeZip(book.zipItems);
       }).then(function (zipFile) {
         var filename = book.meta.titles[0].value.toLowerCase().replace(/\W+/g, '-') + '.epub';
