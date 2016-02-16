@@ -8,7 +8,7 @@
     "prebuild": "eslint lib",
     "build": "rollup -c rollup.config.umd.js && rollup -c rollup.config.es6.js",
     "pretest": "rollup -c rollup.config.test.js",
-    "test": "mocha node test/index.js",
+    "test": "node test/index.js",
     "prepublish": "npm run build && npm test"
   },
   "keywords": [
@@ -34,6 +34,8 @@
   },
   "dependencies": {
     "document-register-element": "^0.5.4",
-    "whatwg-fetch": "^0.11.0"
+    "jszip": "^2.5.0",
+    "whatwg-fetch": "^0.11.0",
+    "xmlserializer": "^0.3.3"
   }
 }

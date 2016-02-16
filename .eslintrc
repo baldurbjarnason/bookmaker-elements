@@ -14,7 +14,7 @@
     "document": true,
     "navigator": true,
     "window": true,
-    "zip": true,
+    "JSZip": true,
     "saveAs": true,
     "fetch": true
   },

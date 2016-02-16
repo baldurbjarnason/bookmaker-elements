@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Better EPUB export from Adobe InDesign</title>
+	<style type="text/css" class="bm-style">
+/*
+	Simple
+
+	Plain ePub css
+
+	Visit http://www.ulyssesapp.com/styles for full reference
+
+*/
+
+.bm-chapter { text-rendering: optimizeLegibility !important; }
+.bm-chapter h1, .bm-chapter h2, .bm-chapter h3 { -webkit-hyphens: none !important; }
+.bm-chapter h1 { page-break-before: always !important; }
+.bm-chapter h1, .bm-chapter h2, .bm-chapter h3, .bm-chapter h4, .bm-chapter h5, .bm-chapter h6 { page-break-after: avoid !important; }
+.bm-chapter #d636861707465722d312e68746d6c-test,.bm-chapter #d636861707465722d322e68746d6c-test {
+	border: 1px solid black;
+	background-image: url("cover.jpg");
+}
+/* p + p { margin:0; text-indent:1.5em; } */
+/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uLy4uL2Nzcy9zdHlsZS5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEsMkZBQTJGLEVBQUUsY0FBTyw4Q0FBOEMsRUFBRSxDQUFDLGlEQUFhLGlDQUFpQyxFQUFFLENBQUMsaUJBQUsscUNBQXFDLEVBQUUsQ0FBQyxpR0FBeUIsbUNBQW1DLEVBQUUsQ0FBQyxtR0FBUyx3QkFBd0IsRUFBRSxtQ0FBbUMsRUFBRSxDQUFDLDRDQUE0QyIsImZpbGUiOiJzdHlsZS5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyIvKlxyXHRTaW1wbGVcclxyXHRQbGFpbiBlUHViIGNzc1xyXHJcdFZpc2l0IGh0dHA6Ly93d3cudWx5c3Nlc2FwcC5jb20vc3R5bGVzIGZvciBmdWxsIHJlZmVyZW5jZVxyXHIqL1xyXHJodG1sIHsgdGV4dC1yZW5kZXJpbmc6IG9wdGltaXplTGVnaWJpbGl0eSAhaW1wb3J0YW50OyB9XHJoMSwgaDIsIGgzIHsgLXdlYmtpdC1oeXBoZW5zOiBub25lICFpbXBvcnRhbnQ7IH1ccmgxIHsgcGFnZS1icmVhay1iZWZvcmU6IGFsd2F5cyAhaW1wb3J0YW50OyB9XHJoMSwgaDIsIGgzLCBoNCwgaDUsIGg2IHsgcGFnZS1icmVhay1hZnRlcjogYXZvaWQgIWltcG9ydGFudDsgfVxyI3Rlc3Qge1xyXHRib3JkZXI6IDFweCBzb2xpZCBibGFjaztcclx0YmFja2dyb3VuZC1pbWFnZTogdXJsKFwiY292ZXIuanBnXCIpO1xyfVxyLyogcCArIHAgeyBtYXJnaW46MDsgdGV4dC1pbmRlbnQ6MS41ZW07IH0gKi9cciJdfQ== */</style>
+<!-- <script src="vendor/vendor.js"></script> -->
+<script async src="dist/index.umd.js"></script>
+</head>
+	<body>
+		<bm-book id="bookmaker-book" meta="book.json">
+			<bm-book-body>
+			<bm-chapter class="bm-chapter" id="loc1">
+<bm-chapter-body class="bm-chapter-body" id="loc6">
+	<section class="chapter" id="loc7" role="doc-chapter">
+	<img src="cover.jpg" alt="Cover">
+	<h2 class="chapter-title" id="d636861707465722d312e68746d6c-chapter-1">Better EPUB export from Adobe InDesign</h2>
+
+<p id="loc9">The single most important fact to keep in mind about the computer is that it&apos;s blind.</p>
+
+<p id="loc10">It can&apos;t &quot;see&quot; the headings or blockquotes even though that&apos;s obvious to humans.</p>
+
+<p id="loc11">To create ebooks and websites that a computer and its app understand we need to make sure that it&apos;s told exactly what everything is.</p>
+
+<p id="loc12">We need to make sure that every important paragraph and character style is mapped to a tag that tells the computer what that bit of text actually is.</p>
+
+<p id="loc13">Adobe&apos;s guide for how to do that in InDesign is here: <a href="http://www.adobe.com/accessibility/products/indesign/mapping.html%5D" id="loc14">http://www.adobe.com/accessibility/products/indesign/mapping.html</a></p>
+
+<p id="loc15">If we don&apos;t, a couple of services that the reader depends on will fall apart:</p>
+
+<ul id="loc16">
+	<li id="d636861707465722d312e68746d6c-test">Styles will render incorrectly in many ebook readers (B&amp;N, Kobo, Marvin).</li>
+	<li id="loc17">Accessibility for the blind will be non-existent both in the EPUB and in <em id="loc18">the PDF</em>. We have customers who get PDF versions of the books with their pledges and unless the tagging is done <em id="loc19">in InDesign</em> those PDFs will not be accessible.</li>
+	<li id="loc20">Internal navigation to important parts of the ebook (ToC, Forewords/Introductions, Indexes) is compromised or disabled in reading apps that support them (many Kindles, for example).</li>
+</ul>
+
+<p id="loc21">&#x2014;<em id="loc22">So what do you need to do?</em></p>
+
+<p id="loc23">Simple. Use the following checklists and you should be good to go.</p>
+
+	</section>
+</bm-chapter-body>
+</bm-chapter>
+<bm-chapter class="bm-chapter" id="loc24">
+<bm-chapter-body class="bm-chapter-body" id="loc29">
+	<section class="chapter" id="loc30" role="doc-chapter">
+	<h2 class="chapter-title" id="d636861707465722d322e68746d6c-chapter-2">Tag mapping checklist</h2>
+
+<ol id="loc31">
+	<li id="loc32">Use InDesign features to create lists and tables instead of mimicking their look manually. <strong id="loc33">DO NOT</strong> include tables as images.</li>
+	<li id="loc34"><code id="loc35">h1</code>. The title of the book on the earliest title page should be mapped to the <code id="loc36">h1</code> tag. It is a signal for browsers as to what the title of the book is. </li>
+	<li id="d636861707465722d322e68746d6c-test"><code id="loc37">h2</code> is what you use for chapter headings, both the chapter title and the chapter number (if applicable). If you extracted all of the <code id="loc38">h2</code> tags in the book the list should form a meaningful and accurate outline of its structure.</li>
+	<li id="loc39">Map sub-headings to <code id="loc40">h3</code>, including chapter sub-titles. If you extracted all of the <code id="loc41">h3</code> tags in a <em id="loc42">chapter</em> the list should form a meaningful and accurate outline of that chapter&apos;s structure.</li>
+	<li id="loc43">All italic character styles should be mapped to <code id="loc44">em</code> (which is short for &quot;emphasis&quot;).</li>
+	<li id="loc45">All bold character styles should be mapped to <code id="loc46">strong</code> (which stands for &quot;strong emphasis&quot;).</li>
+	<li id="loc47">All separators (e.g. centred asterisks) must have &quot;Separator&quot; set as a <em id="loc48">class</em> in <em id="loc49">Export Tagging</em>.</li>
+	<li id="loc50">All quotations and poetry must have a <em id="loc51">class</em> set in <em id="loc52">Export Tagging</em> that begins with &quot;Quote-&quot; (&quot;Quote&quot; and a hyphen). This lets us convert runs of quoted text into proper HTML blockquotes on our end.</li>
+</ol>
+
+	</section>
+</bm-chapter-body>
+</bm-chapter>
+<bm-chapter class="bm-chapter" id="loc53">
+<bm-chapter-body class="bm-chapter-body" id="loc58">
+	<section class="chapter" id="loc59" role="doc-chapter">
+	<h2 class="chapter-title" id="d636861707465722d332e68746d6c-chapter-3">EPUB export checklist</h2>
+
+<p id="loc60">Adobe&apos;s export guide: <a href="https://helpx.adobe.com/indesign/using/export-content-epub-cc.html" id="loc61">https://helpx.adobe.com/indesign/using/export-content-epub-cc.html</a></p>
+
+<ol id="loc62">
+	<li id="loc63">Choose EPUB (Reflowable).</li>
+	<li id="loc64">Choose &quot;3.0&quot; as the version.</li>
+	<li id="loc65">&apos;Remove Forced Line Breaks&apos; is checked. <em id="loc66">Options &gt; Remove Forced Line Breaks</em></li>
+	<li id="loc67">Make sure that the resolution of the images is high enough for mobile phone use, at least 200 ppi, no more than 300 ppi. <em id="loc68">Conversion Settings &gt; Resolution (PPI)</em></li>
+	<li id="loc69">All of the footnotes are proper EPUB 3.0 footnotes: select &quot;Inside a Pop-up (EPUB3)&quot; in <em id="loc70">Text &gt; Footnotes</em>.</li>
+	<li id="loc71"><em id="loc72">JPEG Options &gt; Image Quality</em> is at least Medium.</li>
+	<li id="loc73"><em id="loc74">Object &gt; Preserve Appearance from Layout</em> is checked, because we want the images to look the same in the ebook as it does in PDF.</li>
+	<li id="loc75"><em id="loc76">CSS &gt; Include Embeddable Fonts</em> must <strong id="loc77">NOT</strong> be checked.</li>
+</ol>
+
+	</section>
+</bm-chapter-body>
+</bm-chapter>
+<bm-chapter class="bm-chapter" id="loc78">
+<bm-chapter-body class="bm-chapter-body" id="loc83">
+	<section class="chapter" id="loc84" role="doc-chapter">
+	<h2 class="chapter-title" id="d636861707465722d342e68746d6c-chapter-4">All images MUST have descriptive alternate text</h2>
+
+<p id="loc85">This is essential for the accessibility of <em id="loc86">both</em> the ebook and the PDF.</p>
+
+<p id="loc87">Adobe&apos;s guide for how to do that is here: <a href="https://www.adobe.com/accessibility/products/indesign/alt-text.html" id="loc88">https://www.adobe.com/accessibility/products/indesign/alt-text.html</a></p>
+
+<ol id="loc89">
+	<li id="loc90">Purely decorative images (e.g. flourishes and custom separators) do not need alternative text.</li>
+	<li id="loc91">All photographs need alternative text.</li>
+	<li id="loc92">All drawings and illustrations need alternative text.</li>
+</ol>
+
+<p id="loc93">Keep the text short and descriptive. Do not go into excessive detail.</p>
+
+	</section>
+</bm-chapter-body>
+</bm-chapter>
+</bm-book-body>
+		</bm-book>
+	</body>
+</html>
