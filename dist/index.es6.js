@@ -516,6 +516,24 @@ if (!String.prototype.endsWith) {
   };
 }
 
+(function (ELEMENT) {
+	ELEMENT.matches = ELEMENT.matches || ELEMENT.mozMatchesSelector || ELEMENT.msMatchesSelector || ELEMENT.oMatchesSelector || ELEMENT.webkitMatchesSelector;
+
+	ELEMENT.closest = ELEMENT.closest || function closest(selector) {
+		var element = this;
+
+		while (element) {
+			if (element.matches(selector)) {
+				break;
+			}
+
+			element = element.parentElement;
+		}
+
+		return element;
+	};
+})(Element.prototype);
+
 function getZeroPaddedStringCounter() {
   var counter = 0;
   return function () {
@@ -581,7 +599,11 @@ function renderOpf(book) {
 function renderNcx(book) {
   var counter = getZeroPaddedStringCounter();
   var navPoints = Array.prototype.map.call(book.querySelectorAll('h1, h2'), function (heading) {
-    return '\n  <navPoint id="navPoint-' + counter() + '">\n    <navLabel><text>' + heading.textContent + '</text></navLabel>\n    <content src="index.xhtml#' + heading.id + '" />\n  </navPoint>';
+    if (heading.id) {
+      return '\n  <navPoint id="navPoint-' + counter() + '">\n    <navLabel><text>' + heading.textContent.trim() + '</text></navLabel>\n    <content src="index.xhtml#' + heading.id + '" />\n  </navPoint>';
+    } else {
+      return '\n';
+    }
   }).join('\n');
   return '<ncx version="2005-1" xml:lang="' + book.meta.languages[0].value + '" xmlns="http://www.daisy.org/z3986/2005/ncx/">\n  <head>\n    <meta name="dtb:uid" content="' + book.meta.identifier + '"/>\n    <meta name="dtb:depth" content="2"/>\n    <meta name="dtb:totalPageCount" content="0"/>\n    <meta name="dtb:maxPageNumber" content="0"/>\n  </head>\n\n  <docTitle>\n    <text>' + book.meta.titles[0].value + '</text>\n  </docTitle>\n  <docAuthor>\n    <text>' + book.meta.creators[0].value + '</text>\n  </docAuthor>\n\n  <navMap>\n' + navPoints + '\n  </navMap>\n</ncx>\n';
 };
@@ -2846,8 +2868,6 @@ this.next_out=0; /* remaining free space at output */this.avail_out=0; /* total 
 
 var JSZip = (jszip && typeof jszip === 'object' && 'default' in jszip ? jszip['default'] : jszip);
 
-console.log(JSZip);
-
 function zipItem(filename, file) {
   return {
     href: filename,
@@ -3146,6 +3166,7 @@ if (typeof module !== "undefined" && module.exports) {
 
 var filesaver = (FileSaver && typeof FileSaver === 'object' && 'default' in FileSaver ? FileSaver['default'] : FileSaver);
 
+var manifestCounter = getZeroPaddedStringCounter();
 function manifestItem(href) {
   var type;
   if (href.endsWith('.png')) {
@@ -3155,7 +3176,8 @@ function manifestItem(href) {
   }
   return {
     href: href,
-    type: type
+    type: type,
+    id: 'item' + manifestCounter()
   };
 }
 
@@ -3167,22 +3189,34 @@ var book = {
   },
   attachedCallback: {
     value: function attachedCallback() {
-      this.chapters = Array.prototype.map.call(this.querySelectorAll('bm-chapter'), function (chapter) {
+      // Eventually this should be optional
+      this.chapters = Array.prototype.map.call(this.querySelectorAll('bm-chapter'), function (chapter, index) {
         var div = document.createElement('div');
         div.id = chapter.id;
+        if (index !== 0) {
+          div.setAttribute('style', 'page-break-before: always;');
+        }
         div.className = chapter.className;
         var chapterBody = chapter.querySelector('bm-chapter-body');
         var divBody = document.createElement('div');
-        divBody.id = chapterBody.id;
-        divBody.className = chapterBody.className;
-        divBody.innerHTML = chapterBody.innerHTML;
+        if (chapterBody && chapterBody.id) {
+          divBody.id = chapterBody.id;
+        }
+        if (chapterBody && chapterBody.className) {
+          divBody.className = chapterBody.className;
+        }
+        if (chapterBody) {
+          divBody.innerHTML = chapterBody.innerHTML;
+        } else {
+          divBody.innerHTML = chapter.innerHTML;
+        }
         div.appendChild(divBody);
         return xmlserializer.serializeToString(div).replace(' xmlns="http://www.w3.org/1999/xhtml"', '');
       }).join('\n');
       this.styles = Array.prototype.map.call(document.querySelectorAll('.bm-style'), function (style) {
         return style.textContent;
       }).join('\n');
-      this.styles = this.styles + '\n.bm-chapter { page-break-before: always; }';
+      // this.styles = this.styles + '\n.bm-chapter { page-break-: always; }';
       this.manifest = Array.prototype.map.call(this.querySelectorAll('[src]'), function (src) {
         return manifestItem(src.getAttribute('src'));
       });
@@ -3207,7 +3241,14 @@ var book = {
           book.outline = book.meta.outline;
         } else {
           book.outline = '\n<ol>\n' + Array.prototype.map.call(book.querySelectorAll('h1, h2'), function (heading) {
-            return '<li><a href="index.xhtml#' + heading.id + '">' + heading.textContent + '</a></li>';
+            if (heading.id && !heading.classList.contains('structural')) {
+              return '<li><a href="index.xhtml#' + heading.id + '">' + heading.textContent.trim() + '</a></li>';
+            } else if (heading.classList.contains('structural')) {
+              var parentId = heading.closest('bm-chapter, [role~=doc-chapter]').id;
+              return '<li><a href="index.xhtml#' + parentId + '">' + heading.textContent.trim() + '</a></li>';
+            } else {
+              return '\n';
+            }
           }).join('\n') + '\n</ol>\n';
         }
         if (book.meta.landmarks) {
@@ -3231,6 +3272,8 @@ var book = {
         var filename = book.meta.titles[0].value.toLowerCase().replace(/\W+/g, '-') + '.epub';
         book.zip = zipFile.generate({ type: 'blob', mimeType: 'application/epub+zip', compression: 'DEFLATE' });
         filesaver.saveAs(book.zip, filename);
+      }).catch(function (err) {
+        console.error(err);
       });
     }
   },
